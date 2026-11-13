@@ -1,0 +1,43 @@
+
+# Implementation of Prim's Algorithm
+
+def prim(graph, start):
+    selected = set([start])
+    mst = []
+    total_cost = 0
+
+    while len(selected) < len(graph):
+        min_edge = None
+        min_weight = float('inf')
+
+        for u in selected:
+            for v, weight in graph[u]:
+                if v not in selected and weight < min_weight:
+                    min_weight = weight
+                    min_edge = (u, v, weight)
+
+        if min_edge is None:
+            print("Graph is not connected")
+            return
+
+        u, v, weight = min_edge
+        selected.add(v)
+        mst.append((u, v, weight))
+        total_cost += weight
+
+    print("Minimum Spanning Tree:")
+    for u, v, weight in mst:
+        print(u, "-", v, ":", weight)
+
+    print("Total Minimum Cost:", total_cost)
+
+
+# Main program
+graph = {
+    'A': [('B', 2), ('C', 3)],
+    'B': [('A', 2), ('C', 1), ('D', 4)],
+    'C': [('A', 3), ('B', 1), ('D', 5)],
+    'D': [('B', 4), ('C', 5)]
+}
+
+prim(graph, 'A')
